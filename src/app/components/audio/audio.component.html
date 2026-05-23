@@ -1,0 +1,48 @@
+<div class="container mt-5 mb-5">
+  <div class="row justify-content-center">
+    <div class="col-md-8">
+      
+      <div class="card shadow border-0">
+        <div class="card-header bg-primary text-white text-center p-3">
+          <h3 class="mb-0">Texto a Voz (IA) 🎙️</h3>
+        </div>
+        
+        <div class="card-body p-4 bg-light">
+          
+          <div class="mb-3">
+            <label class="form-label fw-bold">Escribe el texto a locutar:</label>
+            <textarea class="form-control" rows="4" [(ngModel)]="textoLeido" placeholder="Escribe algo aquí..."></textarea>
+          </div>
+
+          <div class="mb-4">
+            <label class="form-label fw-bold">Elige la voz:</label>
+            <select class="form-select" [(ngModel)]="vozElegida">
+              <option value="alloy">Alloy (Andrógina / Neutra)</option>
+              <option value="echo">Echo (Masculina)</option>
+              <option value="nova">Nova (Femenina)</option>
+              <option value="onyx">Onyx (Masculina Profunda)</option>
+            </select>
+          </div>
+
+          <div class="d-grid gap-2">
+            <button class="btn btn-primary btn-lg" (click)="reproducirTexto()" [disabled]="cargando">
+              <span *ngIf="!cargando">Generar Audio</span>
+              <span *ngIf="cargando">Procesando IA... ⏳</span>
+            </button>
+          </div>
+
+          <div class="mt-4 text-center" *ngIf="urlAudio">
+            <hr>
+            <h5 class="text-success mb-3">¡Audio Listo! Escúchalo aquí:</h5>
+            <audio controls autoplay class="w-100">
+              <source [src]="urlAudio" type="audio/mpeg">
+              Tu navegador no soporta el elemento de audio.
+            </audio>
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
