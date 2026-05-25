@@ -1,13 +1,21 @@
 <div class="container mt-4">
-  <h2 class="text-center mb-4 bg-dark text-white p-3 rounded">🚗 Catálogo de Autos</h2>
+  <h2 class="text-center mb-4 bg-dark text-white p-3 rounded">Catálogo de Autos</h2>
 
-  <h4>1. Selecciona una marca:</h4>
-  
-  <div class="row mb-5">
-    <div class="col-md-3 mb-3" *ngFor="let marca of marcas">
-      <button class="btn btn-primary w-100 shadow-sm" (click)="buscarModelos(marca)">
-        {{ marca.name }}
-      </button>
+  <div class="text-center mb-5" *ngIf="marcas.length === 0">
+    <button class="btn btn-success btn-lg shadow" (click)="obtenerMarcas()" [disabled]="cargandoMarcas">
+      <span *ngIf="!cargandoMarcas">Cargar Marcas</span>
+      <span *ngIf="cargandoMarcas">Buscando en la API...</span>
+    </button>
+  </div>
+
+  <div *ngIf="marcas.length > 0">
+    <h4>1. Selecciona una marca:</h4>
+    <div class="row mb-5">
+      <div class="col-md-3 mb-3" *ngFor="let marca of marcas">
+        <button class="btn btn-primary w-100 shadow-sm" (click)="buscarModelos(marca)">
+          {{ marca.name }}
+        </button>
+      </div>
     </div>
   </div>
 
@@ -15,18 +23,18 @@
     <hr>
     <h4>2. Modelos de {{ marcaSeleccionada }}</h4>
 
-    <div *ngIf="cargando" class="text-center my-4">
+    <div *ngIf="cargandoModelos" class="text-center my-4">
       <div class="spinner-border text-primary" role="status"></div>
       <p class="mt-2 text-muted">Buscando...</p>
     </div>
 
-    <ul class="list-group" *ngIf="!cargando && modelos.length > 0">
+    <ul class="list-group" *ngIf="!cargandoModelos && modelos.length > 0">
       <li class="list-group-item" *ngFor="let modelo of modelos">
-        🚗 {{ modelo.name || modelo.model || 'Modelo sin nombre' }}
+         {{ modelo.name || modelo.model || 'Modelo sin nombre' }}
       </li>
     </ul>
 
-    <div *ngIf="!cargando && modelos.length === 0" class="alert alert-warning mt-3">
+    <div *ngIf="!cargandoModelos && modelos.length === 0" class="alert alert-warning mt-3">
       No se encontraron modelos para esta marca.
     </div>
   </div>

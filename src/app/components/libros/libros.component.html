@@ -2,14 +2,14 @@
   
   <div class="card shadow-sm border-0 bg-dark text-white mb-4">
     <div class="card-body text-center p-4">
-      <h2 class="fw-bold mb-3">Buscador de Libros 📚</h2>
+      <h2 class="fw-bold mb-3">Buscador de Libros</h2>
       
       <div class="input-group input-group-lg w-75 mx-auto">
         <input type="text" class="form-control" placeholder="Escribe un título, autor o tema (Ej: El señor de los anillos)" 
                [(ngModel)]="terminoBusqueda" (keyup.enter)="realizarBusqueda()">
         <button class="btn btn-primary" type="button" (click)="realizarBusqueda()" [disabled]="cargando">
           <span *ngIf="!cargando">Buscar</span>
-          <span *ngIf="cargando">Buscando... ⏳</span>
+          <span *ngIf="cargando">Buscando...</span>
         </button>
       </div>
     </div>

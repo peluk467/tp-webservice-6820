@@ -13,7 +13,7 @@ import { AudioService } from '../../services/audio.service';
 export class AudioComponent {
   
   textoLeido: string = '¡Hola! Bienvenidos a mi Trabajo Práctico de Angular.';
-  vozElegida: string = 'alloy'; // Voces de OpenAI: alloy, echo, fable, onyx, nova, shimmer
+  vozElegida: string = 'alloy'; 
   urlAudio: string | null = null;
   cargando: boolean = false;
 
@@ -23,11 +23,11 @@ export class AudioComponent {
     if (!this.textoLeido.trim()) return;
 
     this.cargando = true;
-    this.urlAudio = null; // Limpiamos el audio anterior
+    this.urlAudio = null; 
 
     this.audioService.generarAudio(this.textoLeido, this.vozElegida).subscribe({
       next: (archivoBlob: Blob) => {
-        // Magia: Convertimos el archivo en crudo en un enlace reproducible
+        
         this.urlAudio = URL.createObjectURL(archivoBlob);
         this.cargando = false;
       },

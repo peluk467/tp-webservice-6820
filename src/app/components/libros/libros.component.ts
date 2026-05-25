@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms'; // Necesario para la barra de búsqueda
+import { FormsModule } from '@angular/forms'; 
 import { LibrosService } from '../../services/libros.service';
 
 @Component({
@@ -20,16 +20,14 @@ export class LibrosComponent {
   constructor(private librosService: LibrosService) {}
 
   realizarBusqueda() {
-    if (!this.terminoBusqueda.trim()) return; // Si está vacío, no hace nada
+    if (!this.terminoBusqueda.trim()) return; 
 
     this.cargando = true;
     this.busquedaRealizada = true;
-    this.listaLibros = []; // Limpiamos la lista anterior
-
+    this.listaLibros = []; 
     this.librosService.buscarLibros(this.terminoBusqueda).subscribe({
       next: (datos: any) => {
         console.log('Libros encontrados:', datos);
-        // La API de Open Library devuelve los libros adentro de un arreglo llamado "docs"
         this.listaLibros = datos.docs;
         this.cargando = false;
       },

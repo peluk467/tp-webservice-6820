@@ -4,9 +4,8 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 @Injectable({ providedIn: 'root' })
 export class CarmakerService {
   
-  // Guardamos la llave y el host en una "caja" lista para usar
   private misHeaders = new HttpHeaders({
-    'x-rapidapi-key': '5368067644msh380c5cf851f0ec2p1e0c4fjsn1cfbb03467aa',
+    'x-rapidapi-key': '87c272fd9fmshbd317714b3ef455p1f8d2ejsn466d5dfc1fea',
     'x-rapidapi-host': 'car-specs.p.rapidapi.com'
   });
 

@@ -23,7 +23,7 @@ export class ConversorComponent {
 
   realizarConversion() {
     this.conversorService.convertir(this.de, this.a, this.cantidad).subscribe({
-      // AQUI AGREGAMOS ": any" PARA SOLUCIONAR EL ERROR
+
       next: (datos: any) => { 
         console.log("Datos de la conversión:", datos);
         this.resultado = datos.result; 

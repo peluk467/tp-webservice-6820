@@ -1,6 +1,6 @@
-import { Component, OnInit } from '@angular/core';
-import { CommonModule } from '@angular/common'; // Necesario para iterar listas en el HTML
-import { PeliculaService } from '../../services/pelicula.service'; // Importamos a nuestro Chef
+import { Component, ChangeDetectorRef } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { PeliculaService } from '../../services/pelicula.service';
 
 @Component({
   selector: 'app-peliculas',
@@ -9,24 +9,29 @@ import { PeliculaService } from '../../services/pelicula.service'; // Importamos
   templateUrl: './peliculas.component.html',
   styleUrl: './peliculas.component.css'
 })
-export class PeliculasComponent implements OnInit {
+export class PeliculasComponent {
   
-  // Aquí guardaremos las películas que nos traiga el servicio
   listaPeliculas: any[] = []; 
+  cargando: boolean = false;
 
-  // Inyectamos el servicio en el constructor (es como darle un walkie-talkie al mozo)
-  constructor(private peliculaService: PeliculaService) {}
+  constructor(
+    private peliculaService: PeliculaService,
+    private cdr: ChangeDetectorRef
+  ) {}
 
-  // ngOnInit es un evento que se ejecuta de forma automática cuando el usuario entra a esta página
-  ngOnInit(): void {
-    // Llamamos al método del servicio
+  obtenerPeliculas() {
+    this.cargando = true;
+
     this.peliculaService.obtenerPeliculas().subscribe({
-      next: (datos) => {
-        console.log("¡Llegaron las películas!", datos); // Muestra los datos en la consola oculta (F12)
-        this.listaPeliculas = datos; // Guardamos las películas en nuestra variable
+      next: (datos: any) => {
+        this.listaPeliculas = datos; 
+        this.cargando = false;
+        this.cdr.detectChanges();
       },
-      error: (error) => {
+      error: (error: any) => {
         console.error("Hubo un error al llamar a la API:", error);
+        this.cargando = false;
+        this.cdr.detectChanges();
       }
     });
   }

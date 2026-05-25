@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core'; 
+import { Component, ChangeDetectorRef } from '@angular/core'; 
 import { CommonModule } from '@angular/common';
 import { CarmakerService } from '../../services/carmaker.service';
 
@@ -9,30 +9,57 @@ import { CarmakerService } from '../../services/carmaker.service';
   templateUrl: './carmaker.component.html',
   styleUrl: './carmaker.component.css'
 })
-export class CarmakerComponent implements OnInit {
+export class CarmakerComponent {
   
   marcas: any[] = [];
   modelos: any[] = [];
   marcaSeleccionada: string = '';
-  cargando: boolean = false;
+  
+ 
+  cargandoMarcas: boolean = false;
+  cargandoModelos: boolean = false;
 
-  constructor(private carmakerService: CarmakerService) {}
+  constructor(
+    private carmakerService: CarmakerService, 
+    private cdr: ChangeDetectorRef 
+  ) {}
 
-  ngOnInit() {
-    // Apenas entramos, pedimos la lista de marcas
-    this.carmakerService.getMarcas().subscribe(datos => {
-      this.marcas = datos;
+ 
+  obtenerMarcas() {
+    this.cargandoMarcas = true; 
+
+    this.carmakerService.getMarcas().subscribe({
+      next: (result: any) => {
+        this.marcas = result;
+        this.cargandoMarcas = false;
+        this.cdr.detectChanges();
+      },
+      error: (error: any) => {
+        console.log(error);
+        this.cargandoMarcas = false;
+        this.cdr.detectChanges();
+      }
     });
   }
 
+  
   buscarModelos(marca: any) {
     this.marcaSeleccionada = marca.name;
-    this.cargando = true;
+    this.cargandoModelos = true; 
     this.modelos = []; 
+    this.cdr.detectChanges(); 
 
-    this.carmakerService.getModelos(marca.id).subscribe(datos => {
-      this.modelos = datos;
-      this.cargando = false; 
+    this.carmakerService.getModelos(marca.id).subscribe({
+      next: (result: any) => {
+        this.modelos = result;
+        this.cargandoModelos = false;
+        this.cdr.detectChanges();
+      },
+      error: (error: any) => {
+        console.log(error);
+        this.cargandoModelos = false;
+        this.cdr.detectChanges();
+      }
     });
   }
 }

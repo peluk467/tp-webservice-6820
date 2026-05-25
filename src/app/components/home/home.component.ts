@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-
+import { NavigationExtras, Router } from '@angular/router';
 @Component({
   selector: 'app-home',
   standalone: true,
@@ -7,4 +7,11 @@ import { Component } from '@angular/core';
   templateUrl: './home.component.html', 
   styleUrl: './home.component.css'
 })
-export class HomeComponent { }
+
+export class HomeComponent {
+  constructor(private router: Router) {}
+
+  navigateToPeliculas() {
+    this.router.navigate(['/peliculas']);
+  }
+}
